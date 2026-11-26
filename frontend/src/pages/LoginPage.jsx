@@ -42,6 +42,8 @@ export default function LoginPage() {
           className="absolute inset-0 h-full w-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-blue-950/95 via-blue-900/85 to-blue-800/75" />
+        <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl animate-blob" />
+        <div className="pointer-events-none absolute -bottom-20 -left-16 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl animate-blob animation-delay-2000" />
 
         <div className="relative z-10 flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500 text-lg font-extrabold text-white shadow-lg">
@@ -90,8 +92,10 @@ export default function LoginPage() {
       </div>
 
       {/* Right Login Card */}
-      <div className="flex items-center justify-center p-6 sm:p-10">
-        <div className="w-full max-w-md animate-fade-in-up">
+      <div className="relative flex items-center justify-center p-6 sm:p-10 overflow-hidden">
+        <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl animate-blob" />
+        <div className="pointer-events-none absolute -bottom-24 left-0 h-64 w-64 rounded-full bg-orange-200/40 blur-3xl animate-blob animation-delay-4000" />
+        <div className="relative z-10 w-full max-w-md animate-fade-in-up">
           <div className="mb-8 text-center lg:text-left">
             <div className="mx-auto lg:mx-0 mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-900 text-white font-extrabold shadow-md lg:hidden">
               IT

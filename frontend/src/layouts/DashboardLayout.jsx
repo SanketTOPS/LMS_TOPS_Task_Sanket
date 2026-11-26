@@ -102,8 +102,15 @@ export default function DashboardLayout() {
       )}
 
       {/* Main Content */}
-      <div className="flex flex-1 flex-col lg:pl-64">
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 backdrop-blur px-4 sm:px-6">
+      <div className="relative flex flex-1 flex-col lg:pl-64 overflow-x-hidden">
+        {/* Subtle Animated Background Orbs */}
+        <div className="pointer-events-none fixed inset-0 lg:left-64 overflow-hidden z-0">
+          <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-blue-200/40 blur-3xl animate-blob" />
+          <div className="absolute top-1/2 -left-20 h-72 w-72 rounded-full bg-orange-200/35 blur-3xl animate-blob animation-delay-2000" />
+          <div className="absolute -bottom-24 right-1/3 h-80 w-80 rounded-full bg-indigo-200/30 blur-3xl animate-blob animation-delay-4000" />
+        </div>
+
+        <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/90 backdrop-blur px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -129,7 +136,7 @@ export default function DashboardLayout() {
           </div>
         </header>
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 animate-fade-in-up">
+        <main className="relative z-10 flex-1 p-4 sm:p-6 lg:p-8 animate-fade-in-up">
           <Outlet />
         </main>
       </div>

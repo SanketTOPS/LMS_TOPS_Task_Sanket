@@ -11,3 +11,27 @@
 .card-hover {
   @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-md;
 }
+
+@keyframes blobFloat {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(24px, -18px) scale(1.06);
+  }
+  66% {
+    transform: translate(-18px, 16px) scale(0.96);
+  }
+}
+
+.animate-blob {
+  animation: blobFloat 12s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
