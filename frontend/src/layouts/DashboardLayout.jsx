@@ -33,23 +33,23 @@ export default function DashboardLayout() {
   const navLinkClass = ({ isActive }) =>
     `flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-150 ${
       isActive
-        ? 'bg-accent-500 text-white shadow-sm'
-        : 'text-blue-100/85 hover:bg-brand-800 hover:text-white'
+        ? 'bg-orange-500 text-white shadow-sm'
+        : 'text-slate-200 hover:bg-blue-900 hover:text-white'
     }`
 
   const sidebarContent = (
-    <div className="flex h-full flex-col justify-between bg-brand-900 text-white">
+    <div className="flex h-full flex-col justify-between bg-blue-950 text-white">
       <div>
-        <div className="flex items-center justify-between border-b border-brand-800 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-blue-900 px-5 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-500 text-sm font-extrabold text-white shadow">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500 text-sm font-extrabold text-white shadow">
               IT
             </div>
             <div>
               <span className="block text-base font-bold tracking-tight text-white">
                 Institute LMS
               </span>
-              <span className="block text-[10px] font-medium uppercase tracking-wider text-accent-500">
+              <span className="block text-[10px] font-semibold uppercase tracking-wider text-orange-400">
                 Tech Career Portal
               </span>
             </div>
@@ -57,7 +57,7 @@ export default function DashboardLayout() {
           <button
             type="button"
             onClick={() => setDrawerOpen(false)}
-            className="rounded p-1 text-blue-200 hover:bg-brand-800 lg:hidden"
+            className="rounded p-1 text-blue-200 hover:bg-blue-900 lg:hidden"
             aria-label="Close menu"
           >
             ✕
@@ -77,7 +77,7 @@ export default function DashboardLayout() {
           ))}
         </nav>
       </div>
-      <div className="border-t border-brand-800 p-4 text-xs text-blue-200/80">
+      <div className="border-t border-blue-900 p-4 text-xs text-slate-300">
         Signed in as <strong className="block truncate text-white">{user?.full_name}</strong>
       </div>
     </div>
@@ -108,12 +108,12 @@ export default function DashboardLayout() {
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
-              className="rounded-lg border border-slate-200 p-2 text-slate-600 hover:bg-slate-100 lg:hidden"
+              className="rounded-lg border border-slate-200 p-2 text-slate-700 hover:bg-slate-100 lg:hidden"
               aria-label="Open menu"
             >
               ☰
             </button>
-            <span className="text-sm font-semibold text-brand-700 hidden sm:inline">
+            <span className="text-sm font-semibold text-blue-900 hidden sm:inline">
               Skill-First IT Training & Placement LMS
             </span>
           </div>

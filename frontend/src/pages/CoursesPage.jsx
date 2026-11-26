@@ -305,7 +305,7 @@ export default function CoursesPage() {
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute top-3 left-3">
-                      <span className="rounded-full bg-brand-900/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
+                      <span className="rounded-full bg-blue-950/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
                         {course.code}
                       </span>
                     </div>
@@ -317,11 +317,11 @@ export default function CoursesPage() {
                   <div className="p-5 pb-0">
                     <Link
                       to={`/courses/${course.id}`}
-                      className="block text-base font-bold text-slate-900 group-hover:text-brand-700"
+                      className="block text-base font-bold text-slate-900 group-hover:text-blue-800"
                     >
                       {course.title}
                     </Link>
-                    <p className="mt-1.5 line-clamp-2 text-xs text-slate-500 leading-relaxed">
+                    <p className="mt-1.5 line-clamp-2 text-xs text-slate-600 leading-relaxed">
                       {course.description || 'No description provided.'}
                     </p>
                   </div>
@@ -334,7 +334,7 @@ export default function CoursesPage() {
                   </div>
                   <div className="flex justify-between">
                     <span>Duration / Fee:</span>
-                    <strong className="text-accent-600">{course.duration_weeks}w • ₹{course.fee_amount}</strong>
+                    <strong className="text-orange-600">{course.duration_weeks}w • ₹{course.fee_amount}</strong>
                   </div>
                   <div className="flex flex-wrap gap-2 pt-2">
                     <Link to={`/courses/${course.id}`}>

@@ -1,12 +1,12 @@
 const VARIANT_CLASSES = {
   primary:
-    'bg-brand-700 text-white hover:bg-brand-800 focus:ring-brand-500 border-transparent shadow-sm',
+    'bg-blue-900 text-white hover:bg-blue-950 focus:ring-blue-700 border-transparent shadow-sm',
   accent:
-    'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500 border-transparent shadow-sm',
+    'bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500 border-transparent shadow-sm',
   secondary:
-    'bg-white text-slate-800 hover:bg-slate-50 focus:ring-brand-500 border-slate-300 shadow-sm',
+    'bg-white text-slate-800 hover:bg-slate-50 focus:ring-blue-700 border-slate-300 shadow-sm',
   outlineLight:
-    'bg-white/15 text-white hover:bg-white/25 focus:ring-white border-white/35 backdrop-blur-sm shadow-sm',
+    'bg-blue-900/70 text-white hover:bg-blue-800 focus:ring-white border-white/40 backdrop-blur-sm shadow-sm',
   danger:
     'bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-500 border-transparent shadow-sm',
   ghost:

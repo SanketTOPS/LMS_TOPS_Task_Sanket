@@ -38,23 +38,23 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Hero Welcome Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-brand-900 text-white shadow-lg">
+      <div className="relative overflow-hidden rounded-2xl bg-blue-950 text-white shadow-lg">
         <img
           src="/images/hero-lms.jpg"
           alt="Training Institute Banner"
           className="absolute inset-0 h-full w-full object-cover opacity-25"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-800/90 to-brand-700/75" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-900/90 to-blue-800/75" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6 p-6 sm:p-8">
           <div className="max-w-2xl space-y-2">
             <div className="flex items-center gap-2">
               <Badge tone="accent">{roleName} Workspace</Badge>
-              <span className="text-xs text-blue-200">Active Session</span>
+              <span className="text-xs text-slate-200">Active Session</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               Welcome back, {user?.full_name}
             </h1>
-            <p className="text-sm text-blue-100">
+            <p className="text-sm text-slate-200">
               Manage your IT training modules, live batches, practical assignments, timed quizzes,
               attendance, and course completion progress from one place.
             </p>
@@ -77,14 +77,14 @@ export default function DashboardPage() {
       {/* Institute Highlights */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Practical Training', value: '100%', tone: 'text-brand-700' },
-          { label: 'Attendance Target', value: '75%+', tone: 'text-accent-600' },
+          { label: 'Practical Training', value: '100%', tone: 'text-blue-900' },
+          { label: 'Attendance Target', value: '75%+', tone: 'text-orange-600' },
           { label: 'Completion Goal', value: '80%+', tone: 'text-emerald-600' },
-          { label: 'Evaluation Mode', value: 'Server-Verified', tone: 'text-brand-700' },
+          { label: 'Evaluation Mode', value: 'Server-Verified', tone: 'text-blue-900' },
         ].map((stat) => (
           <Card key={stat.label} hover className="text-center">
             <p className={`text-2xl font-extrabold ${stat.tone}`}>{stat.value}</p>
-            <p className="mt-1 text-xs font-medium text-slate-500">{stat.label}</p>
+            <p className="mt-1 text-xs font-medium text-slate-600">{stat.label}</p>
           </Card>
         ))}
       </div>
@@ -105,16 +105,16 @@ export default function DashboardPage() {
                   alt={item.title}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <span className="absolute top-3 left-3 rounded-full bg-brand-900/85 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm">
+                <span className="absolute top-3 left-3 rounded-full bg-blue-950/90 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm">
                   {item.badge}
                 </span>
               </div>
               <div className="p-5">
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-brand-700">
+                <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-800">
                   {item.title}
                 </h3>
-                <p className="mt-1 text-xs text-slate-500 leading-relaxed">{item.desc}</p>
-                <span className="mt-3 inline-block text-xs font-semibold text-accent-600">
+                <p className="mt-1 text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                <span className="mt-3 inline-block text-xs font-semibold text-orange-600">
                   Open module →
                 </span>
               </div>
