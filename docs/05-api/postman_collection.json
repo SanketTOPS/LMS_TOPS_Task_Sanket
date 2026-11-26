@@ -1,0 +1,397 @@
+{
+  "info": {
+    "name": "LMS API Collection",
+    "_postman_id": "lms-api-v1-collection",
+    "description": "Postman v2.1 collection covering Auth, Users, Courses, Batches, Lectures, Assignments, Quizzes, Attendance, Progress, Payments, and Certificates across Admin, Instructor, and Student roles. Uses collection variables; no real secrets included.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000" },
+    { "key": "admin_email", "value": "admin@example.edu" },
+    { "key": "admin_password", "value": "" },
+    { "key": "instructor_email", "value": "instructor@example.edu" },
+    { "key": "instructor_password", "value": "" },
+    { "key": "student_email", "value": "student@example.edu" },
+    { "key": "student_password", "value": "" },
+    { "key": "admin_token", "value": "" },
+    { "key": "instructor_token", "value": "" },
+    { "key": "student_token", "value": "" },
+    { "key": "course_id", "value": "1" },
+    { "key": "batch_id", "value": "1" },
+    { "key": "student_id", "value": "3" },
+    { "key": "assignment_id", "value": "1" },
+    { "key": "quiz_id", "value": "1" },
+    { "key": "attempt_id", "value": "1" },
+    { "key": "payment_id", "value": "1" },
+    { "key": "certificate_id", "value": "1" },
+    { "key": "verification_code", "value": "VER-SAMPLECODE" }
+  ],
+  "item": [
+    {
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "Login - Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('admin_token', pm.response.json().access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Login - Instructor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('instructor_token', pm.response.json().access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{instructor_email}}\",\n  \"password\": \"{{instructor_password}}\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Login - Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('student_token', pm.response.json().access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{student_email}}\",\n  \"password\": \"{{student_password}}\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Get Current Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Users (Admin)",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": "{{base_url}}/api/users?page=1&page_size=20"
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"New Student\",\n  \"email\": \"newstudent@example.edu\",\n  \"password\": \"TempPass@123\",\n  \"role_name\": \"Student\"\n}"
+            },
+            "url": "{{base_url}}/api/users"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Courses & Batches",
+      "item": [
+        {
+          "name": "List Courses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": "{{base_url}}/api/courses?page=1&page_size=20"
+          }
+        },
+        {
+          "name": "Create Course (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Backend Engineering\",\n  \"code\": \"BE-101\",\n  \"description\": \"FastAPI and SQL\",\n  \"fee_amount\": 1000.0\n}"
+            },
+            "url": "{{base_url}}/api/courses"
+          }
+        },
+        {
+          "name": "List Batches",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{instructor_token}}" }],
+            "url": "{{base_url}}/api/batches?page=1&page_size=20"
+          }
+        },
+        {
+          "name": "Get Batch Roster (Instructor/Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{instructor_token}}" }],
+            "url": "{{base_url}}/api/batches/{{batch_id}}/roster"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Lectures & Assignments",
+      "item": [
+        {
+          "name": "List Course Lectures",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/courses/{{course_id}}/lectures"
+          }
+        },
+        {
+          "name": "Mark Lecture Complete (Student)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/lectures/1/complete"
+          }
+        },
+        {
+          "name": "List Assignments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/assignments"
+          }
+        },
+        {
+          "name": "Evaluate Submission (Instructor)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{instructor_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"marks_obtained\": 90,\n  \"comments\": \"Well structured solution.\"\n}"
+            },
+            "url": "{{base_url}}/api/submissions/1/evaluate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Quizzes",
+      "item": [
+        {
+          "name": "List Available Quizzes (Student)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/quizzes"
+          }
+        },
+        {
+          "name": "Start Quiz Attempt (Student)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/quizzes/{{quiz_id}}/start"
+          }
+        },
+        {
+          "name": "Save Answer (Student)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question_id\": 1,\n  \"selected_option_id\": 2\n}"
+            },
+            "url": "{{base_url}}/api/quiz-attempts/{{attempt_id}}/answer"
+          }
+        },
+        {
+          "name": "Submit Quiz Attempt (Student)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/quiz-attempts/{{attempt_id}}/submit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Attendance & Progress",
+      "item": [
+        {
+          "name": "Get Batch Attendance Roster (Instructor)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{instructor_token}}" }],
+            "url": "{{base_url}}/api/attendance/roster?batch_id={{batch_id}}&class_date=2026-02-01"
+          }
+        },
+        {
+          "name": "Bulk Mark Attendance (Instructor)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{instructor_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": 1,\n  \"class_date\": \"2026-02-01\",\n  \"session_status\": \"held\",\n  \"records\": [\n    { \"student_id\": 3, \"status\": \"Present\" }\n  ]\n}"
+            },
+            "url": "{{base_url}}/api/attendance/bulk"
+          }
+        },
+        {
+          "name": "My Attendance (Student)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/attendance/me"
+          }
+        },
+        {
+          "name": "My Progress (Student)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/progress/me"
+          }
+        },
+        {
+          "name": "Student Progress (Instructor/Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{instructor_token}}" }],
+            "url": "{{base_url}}/api/progress/student/{{student_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Payments & Certificates",
+      "item": [
+        {
+          "name": "Record Payment (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student_id\": 3,\n  \"course_id\": 1,\n  \"amount\": 500.0,\n  \"payment_method\": \"UPI\",\n  \"notes\": \"Installment 1\"\n}"
+            },
+            "url": "{{base_url}}/api/payments"
+          }
+        },
+        {
+          "name": "My Payments (Student)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/payments/me"
+          }
+        },
+        {
+          "name": "Download Payment Receipt PDF",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/payments/{{payment_id}}/receipt"
+          }
+        },
+        {
+          "name": "Generate Certificate (Student)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{student_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": 1\n}"
+            },
+            "url": "{{base_url}}/api/certificates/generate"
+          }
+        },
+        {
+          "name": "Verify Certificate (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/certificates/verify/{{verification_code}}"
+          }
+        },
+        {
+          "name": "Download Certificate PDF",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{student_token}}" }],
+            "url": "{{base_url}}/api/certificates/{{certificate_id}}/download"
+          }
+        }
+      ]
+    }
+  ]
+}
