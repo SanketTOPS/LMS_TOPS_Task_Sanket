@@ -225,6 +225,157 @@ def seed_database(db: Session) -> None:
             db.add(mod)
             db.flush()
 
+    # 3b. Additional TOPS Technologies Catalog Courses (idempotent)
+    tops_courses = [
+        (
+            "TOPS-PYFS-101",
+            "Python Full Stack Development (with AI)",
+            "Full Stack Development",
+            "Front-end and back-end web engineering with Python, Django/FastAPI, SQL, React, and AI integration through real-world projects.",
+            16,
+            Decimal("35000.00"),
+            "/images/course-fullstack.jpg",
+            instructors[0].id,
+            [
+                ("Module 1: Python & OOP Foundations", "Core Python, data structures, and object-oriented design", 1),
+                ("Module 2: Full-Stack Web & AI Projects", "REST APIs, React UI, and AI-assisted workflows", 2),
+            ],
+        ),
+        (
+            "TOPS-JAVA-102",
+            "Java Development (with AI)",
+            "Full Stack Development",
+            "Core and Advanced Java, Spring Boot frameworks, database integration, and enterprise web application development.",
+            16,
+            Decimal("34000.00"),
+            "/images/course-fullstack.jpg",
+            instructors[0].id,
+            [
+                ("Module 1: Core Java & Collections", "OOP, exception handling, and multithreading", 1),
+                ("Module 2: Spring Boot & Microservices", "REST controllers, JPA/Hibernate, and deployment", 2),
+            ],
+        ),
+        (
+            "TOPS-MERN-103",
+            "MERN Stack Web Development",
+            "Full Stack Development",
+            "Build scalable full-stack applications using MongoDB, Express.js, React, and Node.js with live industry projects.",
+            14,
+            Decimal("32000.00"),
+            "/images/course-fullstack.jpg",
+            instructors[0].id,
+            [
+                ("Module 1: Modern JavaScript & React", "ES6+, hooks, routing, and state management", 1),
+                ("Module 2: Node.js, Express & MongoDB", "REST APIs, JWT auth, and schema design", 2),
+            ],
+        ),
+        (
+            "TOPS-DA-201",
+            "Data Analytics & Power BI",
+            "Data Science & Analytics",
+            "Data processing, SQL querying, interactive dashboards in Power BI/Tableau, statistics, and machine learning essentials.",
+            12,
+            Decimal("28000.00"),
+            "/images/course-data-ml.jpg",
+            instructors[1].id,
+            [
+                ("Module 1: Excel, SQL & Data Cleaning", "Querying and transforming business datasets", 1),
+                ("Module 2: Power BI & Predictive Analytics", "DAX, visual storytelling, and ML basics", 2),
+            ],
+        ),
+        (
+            "TOPS-UIUX-301",
+            "UI/UX Design Course (Figma & Prototyping)",
+            "UI/UX & Digital Design",
+            "User research, wireframing, interactive prototyping in Figma, design systems, and portfolio-ready product case studies.",
+            10,
+            Decimal("24000.00"),
+            "/images/course-default.jpg",
+            instructors[0].id,
+            [
+                ("Module 1: UX Research & Wireframing", "User personas, flows, and low-fidelity wireframes", 1),
+                ("Module 2: Figma UI & Prototyping", "Component libraries and interactive prototypes", 2),
+            ],
+        ),
+        (
+            "TOPS-GD-302",
+            "Graphic Design & Visual Branding",
+            "UI/UX & Digital Design",
+            "Visual communication, typography, brand identity, social media creatives, and digital media asset creation.",
+            10,
+            Decimal("22000.00"),
+            "/images/course-default.jpg",
+            instructors[0].id,
+            [
+                ("Module 1: Design Principles & Branding", "Color theory, typography, and logo systems", 1),
+                ("Module 2: Digital & Print Creatives", "Social media kits and portfolio assets", 2),
+            ],
+        ),
+        (
+            "TOPS-DM-401",
+            "Digital Marketing Course (with AI)",
+            "Digital Marketing",
+            "SEO, social media marketing, PPC advertising, content strategy, analytics, and modern AI-powered marketing tools.",
+            10,
+            Decimal("20000.00"),
+            "/images/course-default.jpg",
+            instructors[1].id,
+            [
+                ("Module 1: SEO & Content Marketing", "On-page/off-page SEO and keyword research", 1),
+                ("Module 2: Paid Ads & AI Campaigns", "Meta/Google Ads and AI marketing automation", 2),
+            ],
+        ),
+        (
+            "TOPS-QA-501",
+            "Software Testing (Manual & Automation)",
+            "Software Testing",
+            "Manual QA methodologies, test case design, bug tracking, and automated testing frameworks with Selenium.",
+            12,
+            Decimal("25000.00"),
+            "/images/course-default.jpg",
+            instructors[1].id,
+            [
+                ("Module 1: Manual Testing & STLC", "Test plans, bug lifecycle, and API testing", 1),
+                ("Module 2: Selenium Automation", "WebDriver scripts, Page Object Model, and CI", 2),
+            ],
+        ),
+    ]
+
+    for code, title, category, desc, weeks, fee, thumb, inst_id, mods in tops_courses:
+        c = db.scalar(select(Course).where(Course.code == code))
+        if not c:
+            c = Course(
+                title=title,
+                code=code,
+                category=category,
+                description=desc,
+                duration_weeks=weeks,
+                fee_amount=fee,
+                thumbnail_url=thumb,
+                status=CourseStatus.PUBLISHED,
+                instructor_id=inst_id,
+                created_by=admin.id,
+            )
+            db.add(c)
+            db.flush()
+        for m_title, m_desc, m_order in mods:
+            m = db.scalar(
+                select(CourseModule).where(
+                    CourseModule.course_id == c.id,
+                    CourseModule.sort_order == m_order,
+                )
+            )
+            if not m:
+                db.add(
+                    CourseModule(
+                        course_id=c.id,
+                        title=m_title,
+                        description=m_desc,
+                        sort_order=m_order,
+                    )
+                )
+                db.flush()
+
     # 4. 2 Batches
     batch_1 = db.scalar(select(Batch).where(Batch.code == "FSWD-2026-B1"))
     if not batch_1:
