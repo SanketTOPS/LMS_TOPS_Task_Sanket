@@ -1,4 +1,6 @@
 from functools import lru_cache
+import os
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,6 +13,17 @@ class Settings(BaseSettings):
     ENABLE_API_DOCS: bool = False
 
     DATABASE_URL: str = "mysql+pymysql://root:password@localhost:3306/lms_db"
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def normalize_database_url(cls, value: str) -> str:
+        """Accept mysql:// URLs (e.g. Railway MYSQL_URL) and convert to mysql+pymysql://."""
+        url = (value or "").strip()
+        if not url and os.getenv("MYSQL_URL"):
+            url = os.environ["MYSQL_URL"].strip()
+        if url.startswith("mysql://"):
+            return "mysql+pymysql://" + url[len("mysql://") :]
+        return url
 
     JWT_SECRET_KEY: str = "change-this-to-a-strong-random-secret-key"
     JWT_ALGORITHM: str = "HS256"
